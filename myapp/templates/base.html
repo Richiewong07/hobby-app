@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <title>
+      {% block title %}
+      Hello
+      {% endblock %}
+    </title>
+    {% endblock %}
+  </head>
+  <body>
+    <header>
+      <h1>This is My header</h1>
+    </header>
+    <div>
+      {% block content %}{% endblock %}
+    </div>
+    <footer>
+      {% block footer %}
+      Copyright 2017
+      {% endblock %}
+    </footer>
+  </body>
+</html>

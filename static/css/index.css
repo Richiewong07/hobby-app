@@ -1,0 +1,35 @@
+h1 {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  color: red;
+  font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+  font-weight: bold;
+}
+
+
+
+
+h2 {
+  color: black;
+  font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+}
+
+h2.blue {
+  color: blue;
+}
+
+h2.center {
+  text-align: center;
+}
+
+p {
+  color: black;
+}
+
+img.places {
+  display: block;
+  margin: auto;
+  width: 40%;
+}

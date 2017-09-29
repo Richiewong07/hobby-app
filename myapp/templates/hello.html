@@ -1,0 +1,22 @@
+
+{% extends "base.html" %}
+
+{% block title %}Special Stuff{% endblock %}
+{% block head %}
+{{ super() }}
+<style type="text/css">
+  body {
+    color: red;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>{{ amount|round }}</h2>
+
+<img src="/static/img/200.jpeg" alt="HTTP 200 Status Cat" style="width: 150px">
+
+{% for name in names %}
+<h1>Hello {{ name|lower }}</h1>
+{% endfor %}
+{% endblock %}

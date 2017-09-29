@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Richie Wong</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/index.css"/>
+    <style>
+    .text {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: center;
+    }
+    </style>
+  </head>
+
+{% block content %}
+  <body>
+    <ul class="nav justify-content-center">
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Sports</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">TV Shows</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Travel</a>
+      </li>
+
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <h1>Travel</h1>
+          </div>
+        </div>
+        <div class="row text">
+          <div class="col-sm-12 col-md-6">
+            Coachella - Indio, California
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <img src="static/images/coachella.jpg" alt="Coachella" style="width:100%; height:auto;">
+          </div>
+        </div>
+        <div class="row text">
+          <div class="col-sm-12 col-md-6">
+            Disney World - Orlando, Florida
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <img src="static/images/disney world.jpg" alt="Disney World" style="width:100%; height:auto;">
+          </div>
+        </div>
+        <div class="row text">
+          <div class="col-sm-12 col-md-6">
+            Waikiki, Hawaii
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <img src="static/images/hawaii.jpg" alt="Hawaii" style="width:100%; height:auto;">
+          </div>
+        </div>
+        <div class="row text">
+          <div class="col-sm-12 col-md-6">
+            New York City, New York
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <img src="static/images/new york.jpg" alt="New York" style="width:100%; height:auto;">
+          </div>
+        </div>
+      </div>
+  </body>
+</html>
