@@ -21,7 +21,7 @@ class TemplateHandler(tornado.web.RequestHandler):
 
 class MainHandler(TemplateHandler):
   def get(self):
-    self.render_template("homepage.html",{})
+    self.render_template("index.html",{})
 
 class MainHandler2(TemplateHandler):
   def get(self):
@@ -52,7 +52,7 @@ class YouThreeHandler(tornado.web.RequestHandler):
 
 def make_app():
   return tornado.web.Application([
-    (r"/homepage", MainHandler),
+    (r"/", MainHandler),
     (r"/travel", MainHandler2),
     (r"/tv_shows", MainHandler3),
     (r"/hello3", YouThreeHandler),
