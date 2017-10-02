@@ -46,6 +46,10 @@ class Handler3(TemplateHandler):
 
 class Handler4(TemplateHandler):
   def get(self):
+    self.render_template("sports.html",{})
+
+class Handler5(TemplateHandler):
+  def get(self):
     self.render_template("form_sample.html",{})
   def post(self):
     self.redirect('/thank-you-for-submitting')
@@ -86,7 +90,8 @@ def make_app():
     (r"/", MainHandler),
     (r"/travel", Handler2),
     (r"/tv_shows", Handler3),
-    (r"/form_sample", Handler4),
+    (r"/sports", Handler4),
+    (r"/form_sample", Handler5),
     (r"/page/(.*)", PageHandler),
     (
       r"/static/(.*)",
