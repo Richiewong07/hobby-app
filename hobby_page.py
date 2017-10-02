@@ -46,7 +46,7 @@ class MainHandler3(TemplateHandler):
 
 class MainHandler4(TemplateHandler):
   def get(self):
-    self.render_template("contact_form.html",{})
+    self.render_template("form_sample.html",{})
 
 
 class PageHandler(TemplateHandler):
@@ -84,7 +84,7 @@ def make_app():
     (r"/", MainHandler),
     (r"/travel", MainHandler2),
     (r"/tv_shows", MainHandler3),
-    (r"/contact_form", MainHandler4),
+    (r"/form_sample", MainHandler4),
     (r"/page/(.*)", PageHandler),
     (
       r"/static/(.*)",
