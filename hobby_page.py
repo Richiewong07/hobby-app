@@ -48,7 +48,6 @@ class Handler4(TemplateHandler):
   def get(self):
     self.render_template("form_sample.html",{})
   def post(self):
-    def post (self):
     data = get_arguments()
     if is_valid(data):
       self.redirect("/homepage")
