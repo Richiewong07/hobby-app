@@ -51,7 +51,7 @@ class Handler4(TemplateHandler):
     data = get_arguments()
     if is_valid(data):
       self.redirect("/homepage")
-    self.render_template("form.html", {'form_data': data})
+    self.render_template("form_sample.html", {'form_data': data})
 
 
 class PageHandler(TemplateHandler):
