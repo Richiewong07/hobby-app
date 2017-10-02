@@ -52,7 +52,7 @@ class YouThreeHandler(tornado.web.RequestHandler):
 
 def make_app():
   return tornado.web.Application([
-    (r"/", MainHandler),
+    (r"/homepage", MainHandler),
     (r"/travel", MainHandler2),
     (r"/tv_shows", MainHandler3),
     (r"/hello3", YouThreeHandler),
