@@ -36,15 +36,15 @@ class MainHandler(TemplateHandler):
   def get(self):
     self.render_template("homepage.html",{})
 
-class MainHandler2(TemplateHandler):
+class Handler2(TemplateHandler):
   def get(self):
     self.render_template("travel.html",{})
 
-class MainHandler3(TemplateHandler):
+class Handler3(TemplateHandler):
   def get(self):
     self.render_template("tv_shows.html",{})
 
-class MainHandler4(TemplateHandler):
+class Handler4(TemplateHandler):
   def get(self):
     self.render_template("form_sample.html",{})
 
@@ -82,9 +82,9 @@ def get(self, page):
 def make_app():
   return tornado.web.Application([
     (r"/", MainHandler),
-    (r"/travel", MainHandler2),
-    (r"/tv_shows", MainHandler3),
-    (r"/form_sample", MainHandler4),
+    (r"/travel", Handler2),
+    (r"/tv_shows", Handler3),
+    (r"/form_sample", Handler4),
     (r"/page/(.*)", PageHandler),
     (
       r"/static/(.*)",
