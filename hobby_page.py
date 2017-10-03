@@ -53,9 +53,10 @@ class FormHandler(TemplateHandler):
   def post (self, page):
     email = self.get_body_argument('email')
     password = self.get_body_argument('password')
+
     response = SES_CLIENT.send_email(
       Destination={
-        'ToAddresses': ['richiewong07.com'],
+        'ToAddresses': ['richiewong07@yahoo.com'],
       },
       Message={
         'Body': {
