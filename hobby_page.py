@@ -34,6 +34,7 @@ class TemplateHandler(tornado.web.RequestHandler):
 
 class MainHandler(TemplateHandler):
   def get(self):
+    self.set_header("Content-Type", 'html')
     self.render_template("homepage.html",{})
 
 class Handler2(TemplateHandler):
@@ -51,15 +52,12 @@ class Handler4(TemplateHandler):
 class Handler5(TemplateHandler):
   def get(self):
     self.render_template("form_sample.html",{})
-  def post(self):
-    self.redirect('/thank-you-for-submitting')
 
 
 class PageHandler(TemplateHandler):
   def post (self, page):
     email = self.get_body_argument('email')
     password = self.get_body_argument('password')
-
     response = SES_CLIENT.send_email(
       Destination={
         'ToAddresses': ['richiewong07.com'],
@@ -77,7 +75,7 @@ class PageHandler(TemplateHandler):
     )
     # self.write('Thanks got your data<br>')
     # self.write('Email: ' + email)
-    self.redirect('/thank-you-for-submitting')
+    self.redirect('/thank-you-for-submitting.html')
 
 def get(self, page):
     self.set_header(
