@@ -49,7 +49,8 @@ class SportsHandler(TemplateHandler):
   def get(self):
     self.render_template("sports.html",{})
 
-class FormHandler(TemplateHandler):
+
+class PageHandler(TemplateHandler):
   def post (self, page):
     email = self.get_body_argument('email')
     password = self.get_body_argument('password')
@@ -71,13 +72,13 @@ class FormHandler(TemplateHandler):
     )
     # self.write('Thanks got your data<br>')
     # self.write('Email: ' + email)
-    self.redirect('/thank-you-for-submitting.html')
+    self.redirect('/thank-you-for-submitting')
 
 def get(self, page):
-    self.set_header(
-      'Cache-Control',
-      'no-store, no-cache, must-revalidate, max-age=0')
-    self.render_template(page, {})
+        self.set_header(
+          'Cache-Control',
+          'no-store, no-cache, must-revalidate, max-age=0')
+        self.render_template("form_sample.html", {})
 
 def make_app():
   return tornado.web.Application([
@@ -85,7 +86,7 @@ def make_app():
     (r"/travel", TravelHandler),
     (r"/tv_shows", TvShowsHandler),
     (r"/sports", SportsHandler),
-    (r"/form_sample", FormHandler),
+    (r"sample", PageHandler),
     (
       r"/static/(.*)",
       tornado.web.StaticFileHandler,
