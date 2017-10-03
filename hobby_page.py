@@ -37,24 +37,19 @@ class MainHandler(TemplateHandler):
     self.set_header("Content-Type", 'html')
     self.render_template("homepage.html",{})
 
-class Handler2(TemplateHandler):
+class TravelHandler(TemplateHandler):
   def get(self):
     self.render_template("travel.html",{})
 
-class Handler3(TemplateHandler):
+class TvShowsHandler(TemplateHandler):
   def get(self):
     self.render_template("tv_shows.html",{})
 
-class Handler4(TemplateHandler):
+class SportsHandler(TemplateHandler):
   def get(self):
     self.render_template("sports.html",{})
 
-class Handler5(TemplateHandler):
-  def get(self):
-    self.render_template("form_sample.html",{})
-
-
-class PageHandler(TemplateHandler):
+class FormHandler(TemplateHandler):
   def post (self, page):
     email = self.get_body_argument('email')
     password = self.get_body_argument('password')
@@ -86,11 +81,10 @@ def get(self, page):
 def make_app():
   return tornado.web.Application([
     (r"/", MainHandler),
-    (r"/travel", Handler2),
-    (r"/tv_shows", Handler3),
-    (r"/sports", Handler4),
-    (r"/form_sample", Handler5),
-    (r"/page/(.*)", PageHandler),
+    (r"/travel", TravelHandler),
+    (r"/tv_shows", TvShowsHandler),
+    (r"/sports", SportsHandler),
+    (r"/form_sample", FormHandler),
     (
       r"/static/(.*)",
       tornado.web.StaticFileHandler,
