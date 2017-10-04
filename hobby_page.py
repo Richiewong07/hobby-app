@@ -5,11 +5,10 @@ import tornado.ioloop
 import tornado.web
 import tornado.log
 
-from dotenv import load_dotenv
-
 from jinja2 import \
   Environment, PackageLoader, select_autoescape
 
+from dotenv import load_dotenv
 load_dotenv('.env')
 
 PORT = int(os.environ.get('PORT', '8888'))
@@ -49,13 +48,19 @@ class SportsHandler(TemplateHandler):
   def get(self):
     self.render_template("sports.html",{})
 
+class HobbyHandler(TemplateHandler):
+  def get(self, hobbies):
+     self.set_header(
+       'Cache-Control',
+       'no-store, no-cache, must-revalidate, max-age=0')
+     self.render_template(hobbies + '.html', {})
 
 class ContactHandler(TemplateHandler):
-    def get(self):
-        self.set_header(
-          'Cache-Control',
-          'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("contact.html", {})
+  def get(self):
+    self.set_header(
+      'Cache-Control',
+      'no-store, no-cache, must-revalidate, max-age=0')
+    self.render_template("contact.html", {})
 
     def post (self):
         name = self.get_body_argument('name')
@@ -80,7 +85,7 @@ class ContactHandler(TemplateHandler):
         )
         # self.write('Thanks got your data<br>')
         # self.write('Email: ' + email)
-        self.redirect('/thankyou.html')
+        self.redirect('/hobbies/thankyou')
 
 
 def make_app():
@@ -89,6 +94,7 @@ def make_app():
     (r"/travel", TravelHandler),
     (r"/tv_shows", TvShowsHandler),
     (r"/sports", SportsHandler),
+    (r"/hobbies/(.*)", HobbyHandler),
     (r"/contact", ContactHandler),
     (
       r"/static/(.*)",
