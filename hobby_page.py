@@ -50,16 +50,18 @@ class SportsHandler(TemplateHandler):
     self.render_template("sports.html",{})
 
 
-class PageHandler(TemplateHandler):
+class ContactHandler(TemplateHandler):
     def get(self):
         self.set_header(
           'Cache-Control',
           'no-store, no-cache, must-revalidate, max-age=0')
-        self.render_template("form_sample.html", {})
+        self.render_template("contact.html", {})
 
     def post (self):
+        name = self.get_body_argument('name')
         email = self.get_body_argument('email')
-        password = self.get_body_argument('password')
+        subject = self.get_body_argument('subject')
+        message = self.get_body_argument('message')
 
         response = SES_CLIENT.send_email(
           Destination={
@@ -69,16 +71,16 @@ class PageHandler(TemplateHandler):
             'Body': {
               'Text': {
                 'Charset': 'UTF-8',
-                'Data': 'Email: {}\nPassword: {}\n'.format(email, password),
+                'Data': f"{message}",
               },
             },
-            'Subject': {'Charset': 'UTF-8', 'Data': 'Password Sniffer'},
+            'Subject': {'Charset': 'UTF-8', 'Data': f'{subject}'},
           },
-          Source='richie@richiewong07.com',
+          Source='richiewong07@yahoo.com',
         )
         # self.write('Thanks got your data<br>')
         # self.write('Email: ' + email)
-        self.redirect('homepage/thankyou')
+        self.redirect('/thankyou.html')
 
 
 def make_app():
@@ -87,7 +89,7 @@ def make_app():
     (r"/travel", TravelHandler),
     (r"/tv_shows", TvShowsHandler),
     (r"/sports", SportsHandler),
-    (r"form_sample", PageHandler),
+    (r"/contact", ContactHandler),
     (
       r"/static/(.*)",
       tornado.web.StaticFileHandler,
