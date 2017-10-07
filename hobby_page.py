@@ -34,7 +34,7 @@ class TemplateHandler(tornado.web.RequestHandler):
 class MainHandler(TemplateHandler):
   def get(self):
     self.set_header("Content-Type", 'html')
-    self.render_template("homepage.html",{})
+    self.render_template('homepage.html',{})
 
 # class TravelHandler(TemplateHandler):
 #   def get(self):
@@ -96,16 +96,8 @@ def make_app():
     # (r"/sports", SportsHandler),
     (r"/(.*)", HobbyHandler),
     (r"/contact", ContactHandler),
-    (
-      r"/static/(.*)",
-      tornado.web.StaticFileHandler,
-      {'path': 'static'}
-    ),
-    (
-      r"/images/(.*)",
-      tornado.web.StaticFileHandler,
-      {'path': 'images'}
-    ),
+    (r"/static/(.*)", tornado.web.StaticFileHandler, {'path': 'static'})
+    # (r"/images/(.*)", tornado.web.StaticFileHandler, {'path': 'images')
   ], autoreload=True)
 
 if __name__ == "__main__":
