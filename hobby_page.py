@@ -76,10 +76,10 @@ class ContactHandler(TemplateHandler):
             'Body': {
               'Text': {
                 'Charset': 'UTF-8',
-                'Data': f"{message}",
+                'Data': "{message}",
               },
             },
-            'Subject': {'Charset': 'UTF-8', 'Data': f'{subject}'},
+            'Subject': {'Charset': 'UTF-8', 'Data': '{subject}'},
           },
           Source='richiewong07@yahoo.com',
         )
@@ -103,5 +103,6 @@ def make_app():
 if __name__ == "__main__":
   tornado.log.enable_pretty_logging()
   app = make_app()
-  app.listen(PORT, print('Server started on localhost:' + str(PORT)))
+  app.listen(PORT)
+  print('Server started on localhost:' + str(PORT))
   tornado.ioloop.IOLoop.current().start()
