@@ -36,18 +36,18 @@ class MainHandler(TemplateHandler):
     self.set_header("Content-Type", 'html')
     self.render_template("homepage.html",{})
 
-class TravelHandler(TemplateHandler):
-  def get(self):
-    self.render_template("travel.html",{})
-
-class TvShowsHandler(TemplateHandler):
-  def get(self):
-    self.render_template("tv_shows.html",{})
-
-class SportsHandler(TemplateHandler):
-  def get(self):
-    self.render_template("sports.html",{})
-
+# class TravelHandler(TemplateHandler):
+#   def get(self):
+#     self.render_template("travel.html",{})
+#
+# class TvShowsHandler(TemplateHandler):
+#   def get(self):
+#     self.render_template("tv_shows.html",{})
+#
+# class SportsHandler(TemplateHandler):
+#   def get(self):
+#     self.render_template("sports.html",{})
+#
 class HobbyHandler(TemplateHandler):
   def get(self, hobbies):
      self.set_header(
@@ -91,10 +91,10 @@ class ContactHandler(TemplateHandler):
 def make_app():
   return tornado.web.Application([
     (r"/", MainHandler),
-    (r"/travel", TravelHandler),
-    (r"/tv_shows", TvShowsHandler),
-    (r"/sports", SportsHandler),
-    (r"/hobbies/(.*)", HobbyHandler),
+    # (r"/travel", TravelHandler),
+    # (r"/tv_shows", TvShowsHandler),
+    # (r"/sports", SportsHandler),
+    (r"/(.*)", HobbyHandler),
     (r"/contact", ContactHandler),
     (
       r"/static/(.*)",
