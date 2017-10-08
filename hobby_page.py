@@ -36,33 +36,10 @@ class MainHandler(TemplateHandler):
     self.set_header("Content-Type", 'html')
     self.render_template('homepage.html',{})
 
-# class TravelHandler(TemplateHandler):
-#   def get(self):
-#     self.render_template("travel.html",{})
-#
-# class TvShowsHandler(TemplateHandler):
-#   def get(self):
-#     self.render_template("tv_shows.html",{})
-#
-# class SportsHandler(TemplateHandler):
-#   def get(self):
-#     self.render_template("sports.html",{})
-#
-class HobbyHandler(TemplateHandler):
-  def get(self, hobbies):
-     self.set_header(
-       'Cache-Control',
-       'no-store, no-cache, must-revalidate, max-age=0')
-     self.render_template(hobbies + '.html', {})
 
-class ContactHandler(TemplateHandler):
-  def get(self):
-    self.set_header(
-      'Cache-Control',
-      'no-store, no-cache, must-revalidate, max-age=0')
-    self.render_template("contact.html", {})
+class PageHandler(TemplateHandler):
 
-    def post (self):
+    def post (self,page):
         name = self.get_body_argument('name')
         email = self.get_body_argument('email')
         subject = self.get_body_argument('subject')
@@ -76,26 +53,27 @@ class ContactHandler(TemplateHandler):
             'Body': {
               'Text': {
                 'Charset': 'UTF-8',
-                'Data': "{message}",
+                'Data': 'Name: {}\nEmail: {}\nSubject: {}\nMessage: {}\n'.format(name, email, subject, message),
               },
             },
-            'Subject': {'Charset': 'UTF-8', 'Data': '{subject}'},
+            'Subject': {'Charset': 'UTF-8', 'Data': 'Thank you!'},
           },
-          Source='richiewong07@yahoo.com',
+          Source='richie@richiewong07.com',
         )
         # self.write('Thanks got your data<br>')
         # self.write('Email: ' + email)
-        self.redirect('/hobbies/thankyou')
+        self.redirect('/page/thankyou.html')
 
+    def get(self, page):
+      self.set_header(
+        'Cache-Control',
+        'no-store, no-cache, must-revalidate, max-age=0')
+      self.render_template(page, {})
 
 def make_app():
   return tornado.web.Application([
     (r"/", MainHandler),
-    # (r"/travel", TravelHandler),
-    # (r"/tv_shows", TvShowsHandler),
-    # (r"/sports", SportsHandler),
-    (r"/(.*)", HobbyHandler),
-    (r"/contact", ContactHandler),
+    (r"/page/(.*)", PageHandler),
     (r"/static/(.*)", tornado.web.StaticFileHandler, {'path': 'static'})
     # (r"/images/(.*)", tornado.web.StaticFileHandler, {'path': 'images')
   ], autoreload=True)
